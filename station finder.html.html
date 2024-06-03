@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charging Stations Locator</title>
+    <style>
+     
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url('https://img.freepik.com/premium-vector/location-travel-road-white-background-vector-illustration_547150-344.jpg');
+           
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            text-align: center;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 16px;
+        }
+
+        #chargingStations {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 30px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+    <h1>Station Finder</h1>
+    <label for="state">Select State:</label>
+    <select id="state" onchange="fetchDistricts()">
+        <option value="">Select State</option>
+        <!-- Populate with states -->
+        <!-- You can fetch this data from an API or hardcode it -->
+        <option value="AndhraPradesh">Andhra Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="MadhyaPradesh">Madhya Pradesh</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Punjab">Punjab</option>
+        <option value="TamilNadu">Tamil Nadu</option>
+        <option value="UttarPradesh">Uttar Pradesh</option>
+        <!-- Add more options as needed -->
+    </select>
+
+
+    <br><br>
+
+    <label for="district">Select District:</label>
+    <select id="district" onchange="fetchChargingStations()">
+        <option value="">Select District</option>
+        <!-- District options will be populated dynamically based on the selected state -->
+    </select>
+</div>
+    <br><br>
+
+    <div id="chargingStations">
+        <!-- Charging stations will be displayed here -->
+    </div>
+
+    <script>
+        // Function to fetch districts based on selected state
+        function fetchDistricts() {
+            var stateSelect = document.getElementById("state");
+            var state = stateSelect.options[stateSelect.selectedIndex].value;
+
+            // Here, you would typically fetch the districts based on the selected state
+            // You can use an API or a hardcoded list based on your requirements
+
+            // For demonstration purposes, let's assume you have a hardcoded list
+            var districts = {
+                AndhraPradesh: ["District 1", "District 2", "District 3"],
+                Maharashtra: ["Nagpur", "Yavatmal", "Mumbai","Pune"],
+                MadhyaPradesh: ["District 1", "District 2", "District 3"],
+                Karnataka: ["District 1", "District 2", "District 3"],
+                Kerala: ["District 1", "District 2", "District 3"],
+                Punjab: ["Doraha", "Jalandhar", "Rupnagar","Moga"],
+                TamilNadu: ["District 1", "District 2", "District 3"],
+                UttarPradesh: ["District 1", "District 2", "District 3"],
+                
+            };
+
+            var districtSelect = document.getElementById("district");
+            districtSelect.innerHTML = "<option value=''>Select District</option>";
+
+            if (state && districts[state]) {
+                districts[state].forEach(function(district) {
+                    var option = document.createElement("option");
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Function to fetch charging stations based on selected district
+        function fetchChargingStations() {
+            var districtSelect = document.getElementById("district");
+            var district = districtSelect.options[districtSelect.selectedIndex].value;
+
+            // Here, you would typically fetch the charging stations based on the selected district
+            // You would need to use an API that provides charging station data
+
+            // For demonstration purposes, let's assume you have a hardcoded list
+            var chargingStations = [
+                "Ola Electric Charging Station",
+                "Electric Vehicle Charging Station",
+                "Jio-bp pulse Charging Station",
+                "Ather Grid Charging Station",
+                "TATA Charging Station",
+                "Future Ride Vehicles"
+            ];
+
+            var chargingStationsDiv = document.getElementById("chargingStations");
+            chargingStationsDiv.innerHTML = "<h3>Charging Stations in " + district + "</h3>";
+
+            if (chargingStations.length > 0) {
+                chargingStations.forEach(function(station) {
+                    var button = document.createElement("button");
+                    button.textContent = station;
+                    button.onclick = function() {
+                        // Redirect to map page with selected charging station
+                        var mapLink = "https://maps.google.com/?q=" + encodeURIComponent(station);
+                        window.open(mapLink, "_blank");
+                    };
+                    chargingStationsDiv.appendChild(button);
+                    chargingStationsDiv.appendChild(document.createElement("br")); // Add line break
+                });
+            } else {
+                chargingStationsDiv.innerHTML += "<p>No charging stations found in " + district + "</p>";
+            }
+        }
+    </script>
+</body>
+</html>
