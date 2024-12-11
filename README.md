@@ -89,7 +89,7 @@ Contributions are welcome! If you would like to contribute to the **EV Slop Book
 
 ## Contact
 
-For any inquiries or feedback, please contact [your.email@example.com].
+For any inquiries or feedback, please contact prathamm4467@gmail.com.
 
 ---
 
